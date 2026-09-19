@@ -1,0 +1,26 @@
+name: Promote release to main
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  promote:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Fast-forward main to the release tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update main
+        run: |
+          git fetch origin tag "${GITHUB_REF_NAME}" --no-tags
+          git merge --ff-only "${GITHUB_REF_NAME}"
+          git push origin main
+        env:
+          GITHUB_REF_NAME: ${{ github.event.release.tag_name }}
