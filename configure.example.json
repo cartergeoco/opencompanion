@@ -1,0 +1,203 @@
+{
+  "hf_token": "",
+  "audio": {
+    "sample_rate": 16000,
+    "block_ms": 30,
+    "speech_threshold": 0.02,
+    "start_frames": 4,
+    "end_frames": 12,
+    "device": null,
+    "preroll_ms": 300,
+    "min_utterance_ms": 250,
+    "min_event_ms": 80
+  },
+  "speak_aloud": true,
+  "speak_transcript": false,
+  "tts": {
+    "engine": "local",
+    "local": {
+      "model": "chatterbox-turbo",
+      "device": "auto",
+      "audio_prompt_path": "",
+      "temperature": 0.8,
+      "top_p": 0.95,
+      "repetition_penalty": 1.2
+    },
+    "elevenlabs": {
+      "api_key": "",
+      "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+      "model": "eleven_v3",
+      "base_url": "https://api.elevenlabs.io",
+      "output_format": "pcm_24000",
+      "stability": 0.45,
+      "similarity_boost": 0.75,
+      "style": 0.4,
+      "speed": 1.0
+    }
+  },
+  "recognition": {
+    "engine": "whisper",
+    "language": "en",
+    "stream_interval_ms": 1000,
+    "min_stream_ms": 500,
+    "whisper": {
+      "model": "large-v3-turbo",
+      "device": "auto",
+      "compute_type": "default",
+      "vad_filter": true,
+      "vad_threshold": 0.5,
+      "vad_min_speech_ms": 250,
+      "vad_min_silence_ms": 300,
+      "vad_speech_pad_ms": 120,
+      "no_speech_threshold": 0.6,
+      "log_prob_threshold": -0.8,
+      "hallucination_silence_threshold": 1.0
+    },
+    "gpt_transcribe": {
+      "model": "gpt-transcribe",
+      "api_key": "",
+      "base_url": "",
+      "prompt": ""
+    },
+    "parakeet_tdt": {
+      "model": "nvidia/parakeet-tdt-0.6b-v3",
+      "device": "auto"
+    },
+    "local_custom": {
+      "backend": "command",
+      "command": "",
+      "model_path": "",
+      "device": "auto",
+      "compute_type": "default",
+      "timeout_sec": 60
+    }
+  },
+  "tone": {
+    "enabled": true,
+    "volume": {
+      "enabled": true,
+      "quiet_below": 0.03,
+      "loud_above": 0.12,
+      "quiet_label": "quiet",
+      "normal_label": "normal",
+      "loud_label": "loud"
+    },
+    "mood": {
+      "enabled": true,
+      "engine": "emotion2vec",
+      "model": "emotion2vec/emotion2vec_plus_large",
+      "event_model": "FunAudioLLM/SenseVoiceSmall",
+      "hub": "hf",
+      "device": "cpu",
+      "language": "auto",
+      "min_confidence": 0.45,
+      "min_margin": 0.1,
+      "neutral_bias": 0.08,
+      "labels": {
+        "HAPPY": "happy",
+        "SAD": "sad",
+        "ANGRY": "angry",
+        "NEUTRAL": "neutral",
+        "FEARFUL": "fearful",
+        "DISGUSTED": "disgusted",
+        "SURPRISED": "surprised",
+        "OTHER": "other",
+        "UNKNOWN": "unknown"
+      },
+      "event_labels": {
+        "Speech": "speech",
+        "BGM": "background music",
+        "Applause": "applause",
+        "Laughter": "laughter",
+        "Cry": "crying",
+        "Cough": "cough",
+        "Sneeze": "sneeze",
+        "Breathing": "breathing",
+        "Music": "music",
+        "Noise": "noise"
+      }
+    }
+  },
+  "text_generation": {
+    "provider": "openai",
+    "system_prompt": "You are a helpful conversational companion. Use saved conversation memory whenever it is provided, and answer questions about earlier messages literally and concisely. When a reply would be spoken, include emotion and sound tags from the speech-tag instructions.",
+    "speech_tags": {
+      "enabled": true,
+      "vocabulary": "auto",
+      "max_tags_per_reply": 3,
+      "emotion": [
+        "happy",
+        "angry",
+        "surprised",
+        "fear",
+        "crying",
+        "sarcastic",
+        "dramatic",
+        "whispering",
+        "narration"
+      ],
+      "sound": [
+        "laugh",
+        "chuckle",
+        "cough",
+        "sigh",
+        "gasp",
+        "groan",
+        "sniff",
+        "clear throat",
+        "shush"
+      ]
+    },
+    "temperature": 0.7,
+    "max_tokens": 512,
+    "memory": {
+      "enabled": true,
+      "backend": "sqlite_fts5",
+      "path": "data/text_memory.sqlite3",
+      "max_messages": 12,
+      "first_messages": 4,
+      "relevant_messages": 8,
+      "max_context_chars": 12000
+    },
+    "ollama": {
+      "base_url": "http://localhost:11434",
+      "model": "gemma4-12b-rp",
+      "timeout_sec": 120
+    },
+    "openai": {
+      "api_key": "",
+      "base_url": "https://api.openai.com/v1",
+      "model": "gpt-4o",
+      "timeout_sec": 120
+    }
+  },
+  "screen_visualization": {
+    "backend": "photon",
+    "photon_model": "moondream2",
+    "fallback_to_ollama": true,
+    "base_url": "http://localhost:11434",
+    "model": "qwen3-vl:8b",
+    "realtime_model": "qwen3-vl:2b-instruct",
+    "monitor": 1,
+    "timeout_sec": 300,
+    "max_image_width": 1600,
+    "realtime_max_image_width": 768,
+    "realtime_max_tokens": 120,
+    "jpeg_quality": 80,
+    "sample_fps": 3,
+    "frame_change_threshold": 0.02,
+    "cursor_marker": true,
+    "photon_caption_length": "short",
+    "photon_reasoning": false,
+    "gesture_window_sec": 2.5,
+    "event_minimum_update_ms": 50,
+    "event_debounce_ms": 80,
+    "continuous_scene_interval_sec": 1.5,
+    "deep_escalation_enabled": true,
+    "deep_escalation_cooldown_sec": 30,
+    "deep_model": "qwen3-vl:8b",
+    "context_enabled": true,
+    "prompt": "Read this desktop screenshot carefully. Identify the visible applications and windows, all important readable text, buttons, fields, menus, icons, images, errors or notifications, and their approximate locations. Distinguish what is actually visible from anything uncertain or inferred. Name specific items, games, people, and UI rather than generic categories.",
+    "realtime_prompt": "Identify what this screen is: the program, game, website, or media, using what you see. Name specific visible objects, characters, items, tools, weapons, blocks, UI, and readable text. If a player or person is holding or aiming something, name that item. Do not use generic labels like 'a video game', 'a sword', or 'a tool'."
+  }
+}

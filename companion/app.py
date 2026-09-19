@@ -6,7 +6,7 @@ from datetime import datetime
 
 from companion.config import load_config
 from companion.listen import VoiceDetector, list_input_devices
-from companion.speak import Speaker
+from companion.speak import SpeakError, Speaker
 
 
 def _meter(energy: float, threshold: float, width: int = 20) -> str:
@@ -24,10 +24,16 @@ def listen() -> int:
         end_frames=int(settings["end_frames"]),
         device=settings["device"],
     )
-    speaker = Speaker() if settings["speak_aloud"] else None
+    try:
+        speaker = Speaker(settings) if settings.get("speak_aloud") else None
+    except SpeakError as exc:
+        print(f"Could not start TTS: {exc}", file=sys.stderr)
+        return 1
     was_speaking = False
 
     print("OpenCompanion is listening. Speak into the microphone.")
+    if speaker is not None:
+        print(f"TTS: {speaker.label}")
     print("Press Ctrl+C to stop.")
     print()
 

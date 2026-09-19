@@ -1,0 +1,5 @@
+moondream==2.3.0
+mss>=10.0
+Pillow>=11.0
+windows-capture==2.0.1
+pynput>=1.8
