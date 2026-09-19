@@ -1,0 +1,9 @@
+{
+  "sample_rate": 16000,
+  "block_ms": 30,
+  "speech_threshold": 0.02,
+  "start_frames": 4,
+  "end_frames": 12,
+  "speak_aloud": true,
+  "device": null
+}
